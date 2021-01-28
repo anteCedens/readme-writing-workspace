@@ -1,4 +1,4 @@
-# **An Online Cookbook Project**
+# **Ecommerce Site Project**
 
 
 This project was built for the purposes of one of my personal projects ("milestone projects") at Code Institute.
