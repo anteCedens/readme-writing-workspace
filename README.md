@@ -36,6 +36,7 @@ being the "subject", so to speak - I chose to try and do an online bookstore; an
             - [**Local Deployment**](#local-deployment)
             - [**Remote Deployment**](#remote-deployment)
 4. [**Credits**](#credits)
+    - [**Content**](#content)
     - [**Media**](#media)
     - [**Acknowledgements**](#acknowledgements)
 
@@ -196,6 +197,10 @@ be above the `<table>` itself, but still within the .table-container div. Which 
 This is why the "bag breakdown" (items cost, delivery cost, bag total) is displayed where it is in the bar view. This actual rendering works, but is completely unintentional
 originally, and I seem to have no control over it.
 
+There is space left on the product_detail page (i.e., when the product's image is displayed, the layout is as is, with space
+to the right) because that was space planned for a product description - a short passage about the book taken from Amazon ("language" is to be scrapped
+in the models for instance, and "description" is to be used instead).
+
 #### **_Deployment_**
 
 ##### **_Local Deployment_**
@@ -275,6 +280,10 @@ You get your Postgres database url from Heroku.
 
 ## **Credits**
 
+### **Content**
+
+Info about the books (title, author, publisher, rating, etc.) is taken from Amazon, but needn't represent those actuall
+details on Amazon (especially in regards to rating and price).
 
 ### **Media**
 
