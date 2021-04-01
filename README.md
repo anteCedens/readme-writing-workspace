@@ -3,7 +3,7 @@
 
 This project was built for the purposes of one of my personal projects ("milestone projects") at Code Institute.
 
-This was a Django full stack project, to achive the following:
+This was a Django full stack project, to achieve the following:
 
 >Build a Django project backend by a relational database to create a website that allows users to store and manipulate data records about a particular domain.
 
@@ -119,6 +119,12 @@ and set myself apart from that and use a different CSS framework; I never used B
 Main feature on smaller screen, basically, as opposed to the desktop view, is that the navbar condenses into a hamburger menu:
 the logo/home button always remains visible, while the rest of the navbar's elements become contained in the hamburger menu.
 
+When actual products are displayed, there are sorted random - each time the page is reloaded, they are reshuffled. The idea behind that is
+that in this way no particular product is prioritized by being always displyed first, which could be the case if the products where displayed being ordered
+alphabetically by book title or author name, or by SKU, and it makes the page look somewhat different every time. There are some trade-offs though - for instance,
+maybe on certain occassions the user would like to quickly return exactly to the spot where he has been previously - to quickly find an item he has already see at a 
+certain spot, for instance; by using a radnomized display like this, that item is most likely not to be there anymore where the user saw it.
+
 
 ## **Technologies Used**
 
@@ -164,7 +170,7 @@ for superusers.
 There are still some residual Bulma-inherited stylings for certain pesudo-states on certain elements.
 
 The tutorial project makes use of "crispy-forms" in connection with Bootstrap. I tried using the Bulma equivalent, but, as
-it clearly warned here 
+it clearly warned here (https://pypi.org/project/django-crispy-bulma/)
 
 >This project is an early work in progress. You should not use this package yet, as it is poorly documented and is missing many important features
 
@@ -172,6 +178,26 @@ and the use of them causes more issues than the gain is. But, on the other hand,
 some clashes between Bootstrap and Bulma in the code.
 
 So, to continue to use Bulma, the project does not use crispy-forms.
+
+There was a failed attempt to use Bulma pageloader extension, so the npm install used in connection to that migth not be needed.
+
+The plus and minus buttons that alter the quantity of an item going to the bag are set to be "faded" when disabled, i.e. when they reach the end
+of their respective ranges. When a Bulma grey dark color is chosen for the buttons, in consitency with the rest of the site's pallette, the disabled button
+gets "greyed" to the point where it's respective minus or plus sign only becomes distinguishable to the user when hovering over it.
+Wheter this aids to the "intuitivenes" of the site, or is a hinderance to the user's comprehension, remains debatable.
+
+There is an issue with the sort-selector - which sorts the products by a selected available option (A-Z, by price, by author, etc.) via a dropdown menu - the specific code
+used (the templating language) in the `<option>` elements of the sort-selector, makes Bulma "not recognize" where the sort-select box "ends" when is rendered on the page,
+so the down-arrow for the dropdown menu isn't displayed in the sort-select box, but rather at the far right of the page (that's the blue "chevron-down" icon that can be seen on
+the far right, in level with the sort-select box).
+
+There seems to be a weird thing going on with the `<tfoot>` element - the Bulma table footer.
+The base structure of the table used was taken from Bulma's website, and the table footer should display at the bottom of the table.
+But it does not - it's contents are rather rendered at the top of the table, above the table header. And when checked in the inspector in Chrome,
+the table footer element seems completely empty (void of any content whasoever), and the .tfoot div with the actual contents shows in the inspector to
+be above the `<table>` itself, but still within the .table-container div. Which is not the case in the actual html code.
+This is why the "bag breakdown" (items cost, delivery cost, bag total) is displayed where it is in the bar view. This actual rendering works, but is completely unintentional
+originally, and I seem to have no control over it.
 
 #### **_Deployment_**
 
