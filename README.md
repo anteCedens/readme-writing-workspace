@@ -86,7 +86,7 @@ Site uses two fonts:
  Following what is described about the fonts, imagery used tries to follow suite in being less "stern". 
 
  Colors used as mainly black and white - or rather a "black-looking" specific shade of grey, taken from Bulma's documentation,
- called "Grey dark" there.
+ called "Grey dark" there. "Bulma Grey dark" is used to also match some of Bulma's tooltips used. There are also some "neon" effects added to the white color, for instance when howering over certain `<a>` elements.
  Those colors are chosen to be "simple", work well together while having a high-contrast relation between themselves, and also work
  well with the background. 
 
@@ -94,35 +94,30 @@ Site uses two fonts:
 
 #### **_Navigation_**
 
-Navbar consist of a site title/logo, which also functions as a home button, And three other links to subsites: "Browse Recipes", "Post Recipes", and "About".
+Navbar consist of a site title/logo, which also functions as a home button, and three other elements: a search bar, a view bag button, 
+and a log-in (sign-up or sign-in) button.
 
-Footer has some copyright text example, and links in the forms of social media icons. Those links aren't set up to lead anywhere.
+There are some animations inplemented, to hopefully help the user better understand what's going on. The view bag button has
+a items counter - which displays the total number of items it the bag. That counter works in connection with the add-to-bag button
+on the product detail page(s): add-to-bag button has a little "+" icon, that when the button is clicked, "jumps" into the bag, thus
+signaling to the user the additon when succesfully performed, and also directing attention to the bag items counter, which has now incremented.
 
-Navbar and footer appear on all the site's pages.
+The home/index page also has animation that is triggered when the user hovers over "Browse The Books!" button: a beating heart appears under that button.
+The idea is something along the lines of "books make our hearts beat"; or "our heart beats for books"; or, simply, "we love books", we love browsing through
+books, we love buying books, etc. The heart animation is also my sort of a tribute to https://www.freecodecamp.org/, which I love.
 
-The recipes' cards on the "Browse Recipes" page have buttons, in the form of either just icons, or buttons with text inside, that lead to the Edit Recipe form, page where the recipe's details are displayed, 
-or they show a short preview of the recipe.
-
-Sidebar that become functional on smaller screen has a background image of a wooden spoon full of salt: again something simple and "homey", but also clearly professionally taken. The image is centered and vertically 
-focused, which works well with the sidebar.
+There is also a back-to-top button that appears on the products page when a user scrolls down past a certain point.
 
 #### **_Responsive Design_**
 
-The project basically takes on Materialize's responsive design structure, with practically no alterations.
+The project basically is built using Bulma, and it tries to utilize Bulma's responsive design ideas and structures.
+A few words here also on why Bulma is chosen: mainly, the tutorial project uses Bootstrap, and I wanted to try and step always
+and set myself apart from that and use a different CSS framework; I never used Bulma before, and I wanted to try it.
 
-Main feature on smaller screen, as opposed to the desktop view, is that the navbar's links to the subsites 
-condense into a hamburger menu, which then open the sidebar where those links are now located. On smaller screens the site's logo 
-remains in the navbar (does not get moved to the sidebar), and is centered.
+(Although, not using Bootstrap in this particular instance had its own caveats, namely in regards to "crispy forms", buta bit more on that below.)
 
-#### **_Wireframes_**
-Some (staggeringly) crude wireframes (yep, I do (still) use a pen(cil) and paper)) can be 
-seen here:
-- [main/index page](wireframes/sketch_main_page.JPG)
-- [recipe list page](wireframes/sketch_recipe_list_page.JPG)
-- [recipe card layout](wireframes/sketch_recipe_card.JPG)
-
-MongoDB collection schema example for the project can be seen here:
-- [MongoDB collection schema](wireframes/MS3_MongoDB_schema.JPG)
+Main feature on smaller screen, basically, as opposed to the desktop view, is that the navbar condenses into a hamburger menu:
+the logo/home button always remains visible, while the rest of the navbar's elements become contained in the hamburger menu.
 
 
 ### **Features**
