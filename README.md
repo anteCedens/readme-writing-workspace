@@ -3,32 +3,32 @@
 
 This project was built for the purposes of one of my personal projects ("milestone projects") at Code Institute.
 
-This was a data-centric development project: the requirements were:
+This was a Django full stack project, to achive the following:
 
->build a full-stack site that allows your users to manage a common dataset about a particular domain.
+>Build a Django project backend by a relational database to create a website that allows users to store and manipulate data records about a particular domain.
 
 Or, slightly more specifically:
 
->Build a MongoDB-backed Flask project for a web application that allows users to store and manipulate data records about a particular domain.
+>- build a full-stack site based around business logic used to control a centrally-owned dataset
+>- set up an authentication mechanism and provide paid access to the site's data and/or other activities based on the dataset, such as the purchase of a product/service
 
-Another important note was:
+Two other important points were:
+- using a relational database (recommending MySQL or Postgres)
+- using Stripe payments (naturally using Stripe's test functionality, rather than actual live payments)
 
->No authentication is expected for this project. The focus is on the data, rather than any business logic.
-
-There were a few project ideas suggested, and I chose to try and create an online cookbook.
+The project is built on the basis of and following the tutorial project shown as a part of the course, the main differences 
+being the "subject", so to speak - I chose to try and do an online bookstore; and my attempt at using Bulma (the tutorial uses Bootstrap).
 
 ---
 
 ## Table of Contents
 1. [**Design and Features**](#design-and-features)
     - [**Project Purpose**](#project-purpose)
-        - [**_User Stories_**](#user-stories)
     - [**Design**](#design)
         - [**_Fonts_**](#fonts)
-        - [**_Images_**](#images)
+        - [**_Images and Colors_**](#images-and-colors)
         - [**_Navigation_**](#navigation)
         - [**_Responsive Design_**](#responsive-design)
-        - [**_Wireframes_**](#wireframes)
     - [**Features**](#features)
 2. [**Technologies Used**](#technologies-used)
 3. [**Testing and Features Left to Implement**](#testing-and-features-left-to-implement)
@@ -48,11 +48,15 @@ There were a few project ideas suggested, and I chose to try and create an onlin
 
 ### **Project Purpose**
 
-In addition to what was already mentioned above, like the data 
-handling infrastrucutre (building a MongoDB-backed Flask-based web app), 
-the core focus of the project is providing a CRUD (**C**reate, **R**ead, **U**pdate, **D**elete) functionality for a user 
-through a main navigation menu and a structured layout.
+In addition to what was already mentioned above - in a nutshell: building an ecommerce site
+using Django, further focus and emphasis is to be placed on
 
+- a multiple apps structure
+    - to be composed of multiple apps, each ideally reusable (an app for each potentially reusable component of the project))
+
+- user authentication & interaction
+    - include an authentication mechanism allowing a user to register and log in (plus some motivation - i.e. a reason - fo a user to do so)
+    - include at least one form with validation that will enable users to create to interact with the site (edit models in the backend)
 In other words:
 
 >create functionality for users to create, locate, display, edit and delete records
@@ -60,68 +64,33 @@ In other words:
 and also hopefully do that in a both visually appealing and user friendly manner (ease of use).
 
 
-#### **_User Stories_**
-
-External user’s goals:
-
-- Find and share recipes
-- The site is visually catchy and easy enough and simple to use
-- The site offers some kind of browse-through list or gallery of recipes, with recipe images included
-
 ### **Design**
 
 #### **_Fonts_**
 
 Site uses two fonts:
- - `Lobster`
- - `Indie Flower`
+ - `Caveat Brush`
+ - `Dekko`
 
- `Lobster` is primarily used for heading, and `Indie Flower` for paragraph based text. Idea was to use two fonts 
- that work well together, in both how they look combined on the page, and that they complement each other: 
- `Lobster` makes the heading stand out more, and `Indie Flower` increases readability, when there is more text.
+ They're chosen as a pair because they work well together, and guided by the general idea to make the site more unassuming and
+ less "business-y", with more of like a playful, informal, friedlier note.
+ General guiding idea was to use `Dekko` as a font that would increase readability, when compared to `Caveat Brush`: although the
+ latter seems more "interesting" and "fun", some of its variants - like its bold rendition with an increased font size - might hinder
+ readability.
+ So, for instance, `Dekko` might be used for something as a product's (i.e. book's) title; while `Caveat Brush` "looks more interesting" on a navbar.
 
- The fonts were also chosen to fit semantically with the site's imagery, in trying to provide a "homey", "casual" feeling 
- to the site - something evocative of "home cooking" - while on the other hand trying to maintain an impression of something 
- nevertheless "professionally designed".
 
- So, for instance, `Lobster` can be evocative of a fine dining menu look, while on the other hand still remaining not too stern, or "serious"; 
- `Indie Flower` looks like a handwritten font, evocative of recipes in household family cookbooks, while on the other hand still being not too "scribly" (as actual handwriting can be), and 
- thus still maintaining needed level of readability.
+#### **_Images and Colors_**
 
-#### **_Images_**
+ There is basically only two images used that are not products images themselves: the background and the logo.
+ Following what is described about the fonts, imagery used tries to follow suite in being less "stern". 
 
- Following what is described about the fonts, imagery used tries to follow suite in maintaining than balance, and giving an coherent desired overall feel. 
+ Colors used as mainly black and white - or rather a "black-looking" specific shade of grey, taken from Bulma's documentation,
+ called "Grey dark" there.
+ Those colors are chosen to be "simple", work well together while having a high-contrast relation between themselves, and also work
+ well with the background. 
 
- Index page and the About page have the same background image, thus linking them together.
-
- That image is of a cup of cofee on a saucer with some pastry. The image is postion on the far right of the background, leaving a lot of white space to the left: 
- that space is utilized to display site's images (carousel on the index page) and text without obscuring them.
-
- The image itself gives that "homey" feel - while still being clearly professionally done and staged (the placement of the cinammon decorations etc.) - it is evocative of having somebody over to your home, and serving them a cup 
- of cofee and some pastry - maybe while waiting for a homecooked meal to be ready (connects to the index page, the landing page, the first page - you just got here, welcome); or maybe just after you've finished such a meal (connects to the 
- About page - we've eaten, it's cofee time, time to talk "about", about yourselves possibly (About page is about the site)).
-
- Navbar and footer background is the same, and is the same on all the subsites. It's reminiscent of a tablecloth - possibly a fine dining one, possibly a special occassions home-kept one. What suggests a tablecloth is that the background isn't 
- "just red" for instance: it hassome shadows, slight crinkles, etc. The shadows work well with the text.
-
- The text color of the navbar and footer is white, over a dark background; while the text on the index and About pages is black, over a white background - providing an opposite contrast relation between tha navbar and footer, and pages' text.
-
- The "Browse Recipes" page displays recipes on cards. The layout is four cards per row on desktop. 
- The background of the pafe is white, with no image, so as not to obstruct viewing of the recipe cards.
-
- Rest of the pages are concerned with the recipes' text. They either provide a detailed viewing of a selected recipe, or a form for either editing or adding a recipe. 
- All those pages have the same background image: that of an old, worn-out cookbook, opened wide on a blank page. That would be evocative of an old family cookbook, that's been 
- in one's home for a while.
-
- The form that opens for adding a new recipe has it's own background, over the cookbook: that of a piece of paper from a notebook. Some of those old family cookbooks sometimes 
- have pages from other notebooks with recipes inserted into them, for instance as the cookbook gets filled out over time, and there's no more space for new recipes, etc.
-
- The form for editing an existing recipe also has a notebook paper background, but in this case that piece of paper is crinkled (as oposed to the smooth one for adding a new recipe): 
- symbolically, the idea is that when you add a new recipe the page is new, not written on before; when you edit a recipe, the page has already been in use, so it shows signs of wear, it's been crinkled.
-
- When you open a detailed recipe view, you're just seeing the recipe over the old cookbook backround: you reading a recipe "from the book", that made into the book, is neither being just entered, nor edited.  
-
- There's a "Q" favicon implemented as well - corresponding to the site's name: "Q-zine" (chosen because it sounds like "cuisine").
+ There's a favicon implemented as well - the same one as is used for the site's logo.
 
 #### **_Navigation_**
 
