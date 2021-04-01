@@ -120,42 +120,23 @@ Main feature on smaller screen, basically, as opposed to the desktop view, is th
 the logo/home button always remains visible, while the rest of the navbar's elements become contained in the hamburger menu.
 
 
-### **Features**
-
-Index page has a carousel diplaying images of entered recipes.
-
-The site offers a CRUD functionality. All of the recipes are displayed ("read" from the database) on the "Browse Recipes" page, in the shape of cards. Cards provide buttons to: 
-- "preview" a recipe - opens up a short recipe description and preparation time over the card, without leaving the page; 
-also includes a button that leads to the full recipe description page
-- "edit" a recipe - leads to the edit ("update" in the database) / delete form for that recipe
-- "view" - opens a detailed view of that recipe
-
-Preview and Edit buttons are icons only, with no text, but they provide a tooltip text when hovered over.
-View button is a button with text in it.
-
-"Post Recipe" page open a form to add a new recipe ("create" an entry in the database).
-
-Recipe images are stored via links, rather than being uploaded: this is because I was informed that because of Heroku's "ephemeral" setup, it, 
-simplystically put "doesn't like images", so providing a user to eneter a link to the image is the approach I should take. 
-
 ## **Technologies Used**
 
 - **_IDE and code storage_**
     - GitPod - used as the online IDE
     - GitHub - for the storage of the code online
-- **_Back-End_**
-    - Python 3
-        - Flask
-        - Jinja
-        - PyMongo
-        - DNSPython
+
+- **_Full-stack framework_**
+    - Django
+        - list of installs is in requirements.txt
+
 - **_Database_**
-    - MongoDB Atlas
+    - Postgres when deployed
+    - Django's db.sqlite3 during development
+
 - **_Front-End_**
     - HTML
     - CSS
-        - Materialize
-        - Material Icons
         - Font Awesome
         - Google Fonts
         - Chrome DevTools
@@ -164,36 +145,33 @@ simplystically put "doesn't like images", so providing a user to eneter a link t
 
 - **_Deployment_**
     - Heroku
+    - AWS
 
 ## **Testing and Features Left to Implement**
 
 ### **Testing**
 
-Apart from manual testing as the project was buing built, code was tested with:
+Apart from manual testing as the project was buing built:
 
 - [HTML Validator](https://validator.w3.org/)
 - [CSS Validator](https://jigsaw.w3.org/css-validator/)
 - [JSHint](https://jshint.com/)
 - [PEP8](http://pep8online.com/)
 
-`HTML Validator` showed only Jinja related or caused errors: missing doctype and lang, use of "{" not allowed on particular 
-place, etc., appart from one error, where it stated that a "div" is not allowed as child of a "span", which was remedied.
+The project is unfinished: Stripe integration plus notification emails setup needs finishing, as well as the Profiles app bit, and the CRUD functionality
+for superusers.
 
-`CSS Validator` showed no errors.
+There are still some residual Bulma-inherited stylings for certain pesudo-states on certain elements.
 
-`JSHint` only pointed out "$" as an "undefined variable" - since jQuery was used.
+The tutorial project makes use of "crispy-forms" in connection with Bootstrap. I tried using the Bulma equivalent, but, as
+it clearly warned here 
 
-`PEP8` pointed out only things like too much spacing and too many characters in a line.
+>This project is an early work in progress. You should not use this package yet, as it is poorly documented and is missing many important features
 
-As far as encountered bugs go, there seem to still be some responsiveness issues, mainly concerning recipe card sizes, and footer positioning on some screen sizes, as well as 
-forms display.
+and the use of them causes more issues than the gain is. But, on the other hand, if Bootstrap is used - whose crispy-forms work fine - then there are
+some clashes between Bootstrap and Bulma in the code.
 
-In regards to the forms' functionality, i.e. writing to the database, there seem to be certain fields in them, where one blank space is added to the beginning of those fields, each time a writing (creating or updating) occurs. This happens even if those fields are left empty. So, 
-if, let's say, an entry (i.e. recipe) is first created (i.e. added), and then updated four times, those fields would then be recorded in the database as 
-having five blank spaces entered at the beginning, and read (i.e. displayed) as such back on the page when the form is reopened. This hasn't been dealt with as of yet.
-
-At the very end of the project's development, a major bug seem to have arose in regards to the "delete" functionality. Although everything seemed fine at the earlier stages of development with this, the delete option doesn't seem to be working proprely now. 
-When a project is deployed to Heroku for the first time, the delete function works. But after that, every time delete is used, the app treats it as an update. The function doesn't seem to be working through GitPod either.
+So, to continue to use Bulma, the project does not use crispy-forms.
 
 #### **_Deployment_**
 
