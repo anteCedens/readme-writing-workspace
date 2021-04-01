@@ -29,16 +29,13 @@ being the "subject", so to speak - I chose to try and do an online bookstore; an
         - [**_Images and Colors_**](#images-and-colors)
         - [**_Navigation_**](#navigation)
         - [**_Responsive Design_**](#responsive-design)
-    - [**Features**](#features)
 2. [**Technologies Used**](#technologies-used)
-3. [**Testing and Features Left to Implement**](#testing-and-features-left-to-implement)
+3. [**Testing, Features Left to Implement, and Deployment**](#testing-features-left-to-implement-and-deployment)
     - [**Testing**](#testing)
         - [**Deployment**](#deployment)
             - [**Local Deployment**](#local-deployment)
             - [**Remote Deployment**](#remote-deployment)
-    - [**Features Left to Implement**](#features-left-to-implement)
 4. [**Credits**](#credits)
-    - [**Content**](#content)
     - [**Media**](#media)
     - [**Acknowledgements**](#acknowledgements)
 
@@ -153,7 +150,7 @@ certain spot, for instance; by using a radnomized display like this, that item i
     - Heroku
     - AWS
 
-## **Testing and Features Left to Implement**
+## **Testing, Features Left to Implement, and Deployment**
 
 ### **Testing**
 
@@ -164,7 +161,7 @@ Apart from manual testing as the project was buing built:
 - [JSHint](https://jshint.com/)
 - [PEP8](http://pep8online.com/)
 
-The project is unfinished: Stripe integration plus notification emails setup needs finishing, as well as the Profiles app bit, and the CRUD functionality
+The project is unfinished: `Stripe` integration plus notification emails setup needs finishing, as well as the Profiles app bit, and the CRUD functionality
 for superusers.
 
 There are still some residual Bulma-inherited stylings for certain pesudo-states on certain elements.
@@ -204,38 +201,48 @@ originally, and I seem to have no control over it.
 ##### **_Local Deployment_**
 
 
-In order to run this project locally, you will need to install: 
+In order to run this project locally, you will need to have installed: 
 - An IDE of your choice (VS Code, etc.)
 - [Python3](https://www.python.org/downloads/)
 - [PIP](https://pip.pypa.io/en/stable/installing/) - to install the app's requirements (listed in the "requirements.txt")
 - [GIT](https://www.atlassian.com/git/tutorials/install-git) - for version control
-- [MongoDB](https://www.mongodb.com/) - to work with the database
 
+You would also require a [Stripe](https://www.stripe.com/) setup, to access the full intended functionality.
 
 After this is installed, download the .ZIP file of the repository, unzip this file, and then:
 
 - in the CLI with GIT installed, enter the following command: 
    
-        https://github.com/anteCedens/CI-MS3-cookbook.git
+        git clone https://github.com/anteCedens/CI-MS3-cookbook.git
 
 - navigate to the to path using the `cd` command. 
-- create an `env` file with your credentials (values)
+- create an `env` file with your credentials (values):
+    - **os.environ["SECRET_KEY"]** >> This is a Django secret key; one is generated when you install Django; you can (and should)
+    always get a new one at https://miniwebtool.com/django-secret-key-generator/ 
+    - **os.environ["STRIPE_PUBLIC_KEY"]** >> you obtain this from Stripe
+    - **os.environ["STRIPE_SECRET_KEY"]** >> you obtain this from Stripe 
 - install all of the app's requirements for running, listed in the requirements.txt file, by using the following command:
     
-        sudo -H pip3 -r requirements.txt
+        pip3 install -r requirements.txt
 
-- sign up for a free account on [MongoDB Atlas](https://www.mongodb.com/) and create a new database called "ci_ms3_cookbook". Name of the database collection 
-can be seen here: [MongoDB collection schema](wireframes/MS3_MongoDB_schema.JPG). 
+- migrate your models (effectively create a database) using:
+
+        python3 manage.py migrate
+
+- create a superuser using: 
+
+        python3 manage.py createsuperuser 
 - now you should then be able to launch your app using the following command in your terminal:
 
-        python3 app.py
+        python3 manage.py runserver
 
 ##### **_Remote Deployment_**
 
 To remotely run this project: 
 
-- in your GitPod workspace, create a `requirements.txt` file using this command in the terminal: `pi3p freeze > requirements.txt`.
+- in your GitPod workspace, create a `requirements.txt` file using this command in the terminal: `pip3 freeze > requirements.txt`.
 - create a `Procfile` using this command in the terminal: `echo web: python app.py > Procfile`.
+- set up your `Procfile` like so: web: `gunicorn [your_Django_project_name].wsgi:application`
 - `git add` and `git commit` the new requirements and Procfile and then `git push` the project to GitHub.
 - go to [Heroku](https://dashboard.heroku.com/login)
 - click the "new" button, give the project a name & set the region to Europe. 
@@ -244,116 +251,63 @@ To remotely run this project:
 - in the Heroku dashboard for the application, click on "Settings" > "Reveal Config Vars".
 - set the config variables as so:
 
-| KEY | VALUE |
---- | --- | 
-IP | 0.0.0.0|
-PORT | 8080|
-MONGO_DBNAME | <database_name>
-MONGO_URI| mongodb+srv:// \<username>: \<password>@<cluster_name>.mongodb.net/<database_name>?retryWrites=true&w=majority 
+| Key | Value | 
+    --- | --- 
+    AWS_ACCESS_KEY_ID | `<secret key>` | 
+    AWS_SECRET_ACCESS_KEY | `<secret key>` |
+    AWS_STORAGE_BUCKET_NAME | `<AWS S3 bucket name>` |
+    DATABASE_URL | `<your postgres database url>` |
+    SECRET_KEY | `<django secret key>` |
+    STRIPE_PUBLIC_KEY | `<stripe public key>` |
+    STRIPE_SECRET_KEY | `<stripe secret key>` |
+    USE_AWS | `True` |
 
-- in the Heroku dashboard, click "Deploy"
-- the application should now be deployed
+You get your Postgres database url from Heroku.
 
-### **Features Left to Implement**
+- then back in the terminal in GitPod
+    - enter the heroku Postgres shell
+    - migrate the database models again, as described above (this is to create the database now in Postgres)
+    - create your superuser account again, as described above (this is to create the superuser now in Postgres)
 
-**_Carousel "randomizer"_**
+- in the Heroku dashboard, click "Deploy" (>> "Manual Deploy" >> master branch >> "Deploy Branch")
+- the application should now be deployed (after you wait a bit for the build to be completed)
 
-Currently, the carousel and the index page displays all the images from the database, 
-in the sequence in which they are stored in the database, which is chronologically. And the 
-sequence resets - i.e. starts from the beginning - each time the index page is loaded.
-
-So, if an image stored in the database last, it would go to the back of the carousel, and get displayed last. 
-It's a FIFO principle, basically (**F**irst **I**n **F**irst **O**ut - i.e. what is stored in the database 
-first, is displayed out in the carousel first also).
-
-With a larger number of entries, some of the images would in practice never get displayed, or more precicely, 
-they would never get _seen_, as it could be not expected for a user to stay on the index page long enough for those 
-particulary images to be displayed on the carousel.
-
-Or, in other words, some of the images would not "get a fair chance to be seen". And the idea, or the desire, is that all 
-images, which represent recipes, get treated equally in that regard.
-
-I attempted to change the "step" option of the carousel - i.e. parameter which controls the image display pattern: default "step" is 1, 
-which means the carousel displays the next image in the que. So if the "step" is set to, for instance, 3, the carousel would display every 
-third image. But, that doesn't visually look right, becuase the transition to the following image doesn't render seamlessly, but it rather 
-looks like the carousel is spinning at great speed until it reaches the desired image.
-
-So a "carousel randomizer" is an idea where the carousel is set to display images in random sequence, and the sequence is randomized (or "shuffled") 
-anew every time the index page is loaded.
-
-**_Delete confirmation_**
-
-Currently the delete button in the Edit Recipe form form is set up that you only press it once, and the recipe is deleted. I'd like to have an additional 
-"delete confirmation" feature set up: when the delete button is pressed, a message would pop up (using a Materialize "modal", for instance) asking the user 
-to confirm deletion.
-
-**_Character restriciton_**
-
-Currently, there is no character restriction in the forms, when adding a new recipe. Implementing such a feature might be beneficial, namely for such fields in 
-the form as the recipe's name, and short description.
-
-Also, additional form validation functionalities are to be considered.
-
-**_Further form styling_**
-
-Maybe make the forms (for adding and editing recipes) more visually appeling, based on user feedback, in regards to typography, or button styling. Possibly adding further data entry fields about the recipes, such 
-as serving, ingredients, course (main, side, starter, etc.), or meal (breakfast, lunch, dinner).
-
-**_Search bar_**
-
-Currently there is none.
 
 ## **Credits**
 
-### **Content**
-
-Content on the index and About pages was written by me.
-
-Recipes entered in the database at the moment of writting this, were taken from these sources:
-
-- https://tasty.co/recipe/baked-avocado-eggs
-- https://www.delish.com/cooking/recipe-ideas/a26728380/baked-pineapple-salmon-recipe/
-- https://www.bbcgoodfood.com/recipes/spaghetti-meatballs
-- https://www.allrecipes.com/recipe/257198/thin-crust-pizza-dough/
-- https://www.bbcgoodfood.com/recipes/chorizo-mozzarella-gnocchi-bake
 
 ### **Media**
 
-All recipes images diplayed on the site as of the moment of writting this are rendered via their URL's, so a source 
-for the image is always evident.
+Background image: 
+- https://weheartit.com/entry/161231357
 
-All the other images used, stored in the project on GitPod, are from:
+Site logo/favicon:
+- https://www.clipartmax.com/middle/m2i8A0G6b1K9b1i8_open-book-design-book-open-vector-png-and-vector-open-book-logo/
 
-- https://hipwallpaper.com/
-- https://wallpaperaccess.com/
-
-except for the 404 image, which is from:
-
-- https://www.freepik.com/
+Product images are all from https://www.amazon.co.uk/. Their urls are contained in the code.
 
 Icons used are from:
-
-- https://material.io/resources/icons/?style=baseline
 - https://fontawesome.com/
 
 ### **Acknowledgements**
 
-For the core know-how on how to build a project like this, I've used Code Institutes "Task Manager" 
-tutorial project:
+Chief dependencies are referenced in the code and/or mentioned already above:
 
-- https://github.com/Code-Institute-Solutions/TaskManager
+The project in general tries to emulate Code Institute's tutorial project:
 
-In regards to designing an online cookbook specifically, I've browsed through my fellow students' projects, 
-such as:
+- https://github.com/ckz8780/boutique_ado_v1
 
-- https://github.com/sohailshams/cookbook
-- https://github.com/sabinemm/recipe-site-ms3
-- https://github.com/amybru/byoboba
-- https://github.com/Trevbytes/Chickpeas
-- https://github.com/ss00831/milestone3
-- https://github.com/ajgoward/daddies_recipes_MS3
-- https://github.com/lewisclark4/CI-MilestoneProjectThree
-- https://github.com/ceciliabinck/cook-with-me
+Beating heart animation modified from:
+
+- https://www.freecodecamp.org/learn/responsive-web-design/applied-visual-design/make-a-css-heartbeat-using-an-infinite-animation-count
+
+Add-to-bag animation modified from:
+
+- https://codepen.io/designcouch/pen/OJPdZxg (author: Jesse Couch)
+
+Back-to-top button modified from:
+
+- https://www.w3schools.com/howto/howto_js_scroll_to_top.asp
 
 As writing the readme.md goes, for me, since project one, when in doubt or stuck, it's always been W.W.C.L.D.: 
 What Would Claire Lally Do?:
@@ -362,7 +316,7 @@ What Would Claire Lally Do?:
 
 Other resources used:
 
-- https://www.lipsum.com/
+- https://encycolorpedia.com/
 - https://www.diffchecker.com/diff
-- https://jpg2png.com/
-- https://convertico.com/
+- https://encycolorpedia.com/
+- https://hnet.com/png-to-ico/
